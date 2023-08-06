@@ -59,7 +59,7 @@ const verified=(async(req,res)=>{
     const user= await User.update({
         isVerified:true },{where:{id:emailcodeUser.userId},returning:true}
     )
-    await emailcodeUser.destroy()
+    await EmailCode.destroy({ where: {code} });
     if(user[0] === 0) return res.sendStatus(404);
     return res.json(user[1][0])
 })
@@ -116,7 +116,7 @@ const reset_passwordCode=(async(req,res)=>{
     const user= await User.update({
         password:hashpassword },{where:{id:emailCode.userId},returning:true}
     )
-    await emailCode.destroy()
+    await EmailCode.destroy({ where: {code} });
     if(user[0] === 0) return res.sendStatus(404);
     return res.json(user[1][0])
 
