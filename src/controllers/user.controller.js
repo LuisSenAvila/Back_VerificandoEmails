@@ -18,7 +18,7 @@ const create = catchError(async(req, res) => {
     body.password=hashedPassword
     const result = await User.create(body);
     const code=require('crypto').randomBytes(64).toString('hex')
-    const frontBaseUrl="http://localhost:3000/#"
+    const frontBaseUrl="https://autenticacionemails.netlify.app/#"
     verifyAccount({email,firstName,code,frontBaseUrl})
     await EmailCode.create({code,userId:result.id})
     
@@ -94,7 +94,7 @@ const resetPassword=(async(req,res)=>{
     const user= await User.findOne({where:{email}})
     if(!user) return res.sendStatus(401)
     const code=require('crypto').randomBytes(64).toString('hex')
-    const frontBaseUrl="http://localhost:3000/#"
+    const frontBaseUrl="https://autenticacionemails.netlify.app/#"
     sendEmail({
         to:email,
         subject:'Recuperación de contraseña',
